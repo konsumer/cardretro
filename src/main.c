@@ -138,7 +138,9 @@ static void GameLoop(void) {
             }
         EndMode3D();
 
-        DrawText("Navigate with D-Pad / Arrows", 10, 10, 20, LIGHTGRAY);
+        if (g.targetIndex == 0) {
+            DrawText("Navigate with D-Pad / Arrows", 10, 10, 20, LIGHTGRAY);
+        }
     EndDrawing();
 }
 
