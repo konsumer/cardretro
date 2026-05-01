@@ -24,14 +24,9 @@ jobs:
       - name: Set up Emscripten
         uses: mymindstorm/setup-emsdk@v14
 
-      - name: Configure (emcmake)
-        run: emcmake cmake -B wbuild -DCMAKE_BUILD_TYPE=Release
-
       - name: Build
-        run: cmake --build wbuild --parallel
-
-      - name: Copy artifacts into web/
         run: |
+          npm run web:build
           cp wbuild/cardretro.mjs  web/
           cp wbuild/cardretro.data web/
 
