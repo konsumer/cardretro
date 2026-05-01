@@ -9,6 +9,7 @@
 
 // Replace this with your actual per-card filename logic
 static const char *CardFilename(int i) {
+    // return TextFormat("poster%d.png", i + 1);
     (void)i;
     return "poster.png";  // demo: every card uses the same image
 }
