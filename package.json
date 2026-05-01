@@ -1,9 +1,12 @@
 {
-  "name": "raylib-cardflow",
+  "name": "cardretro",
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "start": "npx -y live-server --mount=/cardretro.mjs:./wbuild/cardretro.mjs --mount=/cardretro.data:./wbuild/cardretro.data web"
+    "prestart": "npm run build:web",
+    "start": "npx -y live-server --mount=/cardretro.mjs:./wbuild/cardretro.mjs --mount=/cardretro.data:./wbuild/cardretro.data web",
+    "build:web": "emcmake cmake -B wbuild && cmake --build wbuild",
+    "build:native": "cmake -B build && cmake --build build"
   },
   "type": "module"
 }

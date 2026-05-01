@@ -1,7 +1,10 @@
 ```sh
-cmake -B build
-cmake --build build
+# start live-reloading webserver
+npm start
 
-emcmake cmake -B wbuild
-cmake --build wbuild
+# build web
+npm run build:web
+
+# build native
+npm run build:native
 ```
