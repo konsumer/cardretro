@@ -3,6 +3,9 @@
 
 #define CARD_COUNT 30
 
+#define REPEAT_DELAY 0.4f   // seconds before repeat kicks in
+#define REPEAT_RATE  0.08f  // seconds between repeats while held
+
 int main(void) {
     InitWindow(1280, 720, "CardRetro");
 
@@ -24,15 +27,47 @@ int main(void) {
 
     int targetIndex = 0;
     float smoothIndex = 0.0f;
+    float rightTimer = 0.0f;
+    float leftTimer  = 0.0f;
 
     SetTargetFPS(60);
 
     while (!WindowShouldClose()) {
-        if (IsKeyPressed(KEY_RIGHT) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT)) {
-            if (targetIndex < CARD_COUNT - 1) targetIndex++;
+        float dt = GetFrameTime();
+
+        bool rightDown    = IsKeyDown(KEY_RIGHT)    || IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT);
+        bool leftDown     = IsKeyDown(KEY_LEFT)     || IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_FACE_LEFT);
+        bool rightPressed = IsKeyPressed(KEY_RIGHT) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT);
+        bool leftPressed  = IsKeyPressed(KEY_LEFT)  || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_LEFT);
+
+        if (rightDown) {
+            if (rightPressed) {
+                if (targetIndex < CARD_COUNT - 1) targetIndex++;
+                rightTimer = -REPEAT_DELAY;         // wait before first repeat
+            } else {
+                rightTimer += dt;
+                if (rightTimer >= REPEAT_RATE) {
+                    if (targetIndex < CARD_COUNT - 1) targetIndex++;
+                    rightTimer -= REPEAT_RATE;      // keep remainder for steady cadence
+                }
+            }
+        } else {
+            rightTimer = 0.0f;
         }
-        if (IsKeyPressed(KEY_LEFT) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_LEFT)) {
-            if (targetIndex > 0) targetIndex--;
+
+        if (leftDown) {
+            if (leftPressed) {
+                if (targetIndex > 0) targetIndex--;
+                leftTimer = -REPEAT_DELAY;
+            } else {
+                leftTimer += dt;
+                if (leftTimer >= REPEAT_RATE) {
+                    if (targetIndex > 0) targetIndex--;
+                    leftTimer -= REPEAT_RATE;
+                }
+            }
+        } else {
+            leftTimer = 0.0f;
         }
 
         smoothIndex = Lerp(smoothIndex, (float)targetIndex, 0.1f);
