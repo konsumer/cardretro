@@ -1,0 +1,9 @@
+{
+  "name": "raylib-cardflow",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "start": "npx -y live-server --mount=/cardflow.mjs:./wbuild/cardflow.mjs --mount=/cardflow.data:./wbuild/cardflow.data web"
+  },
+  "type": "module"
+}
