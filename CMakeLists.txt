@@ -50,7 +50,6 @@ if(EMSCRIPTEN)
   target_compile_definitions(${PROJECT_NAME} PRIVATE PLATFORM_WEB)
   target_link_options(${PROJECT_NAME} PRIVATE
     -sSINGLE_FILE=1
-    -sASYNCIFY
     -sUSE_GLFW=3
     -O3
     -sINITIAL_MEMORY=67108864

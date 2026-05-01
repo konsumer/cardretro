@@ -1,6 +1,10 @@
 #include "raylib.h"
 #include "raymath.h"
 
+#ifdef PLATFORM_WEB
+#include <emscripten/emscripten.h>
+#endif
+
 #define CARD_COUNT   2000
 #define WINDOW_HALF  8     // textures to keep loaded on each side of the focused card
 
@@ -14,149 +18,162 @@ static const char *CardFilename(int i) {
     return "poster.png";  // demo: every card uses the same image
 }
 
-// Sync the loaded set to the window [center-WINDOW_HALF .. center+WINDOW_HALF].
-// Cards outside the window are unloaded; cards inside are loaded on demand.
-// Falls back to `placeholder` if the file can't be found.
-static void UpdateWindow(Texture2D *textures, bool *loaded, int center, Texture2D placeholder) {
+// ---------------------------------------------------------------------------
+// All mutable state lives here so it's in the data segment, not the stack.
+// This is required for emscripten_set_main_loop (no ASYNCIFY needed).
+// ---------------------------------------------------------------------------
+typedef struct {
+    Camera3D  camera;
+    Model     cardModel;
+    Texture2D placeholder;
+    Texture2D textures[CARD_COUNT];
+    bool      textureLoaded[CARD_COUNT];
+    int       targetIndex;
+    int       loadedCenter;
+    float     smoothIndex;
+    float     rightTimer;
+    float     leftTimer;
+} GameState;
+
+static GameState g;  // zero-initialised at program start
+
+// ---------------------------------------------------------------------------
+
+static void UpdateWindow(int center) {
     int lo = center - WINDOW_HALF;
     int hi = center + WINDOW_HALF;
 
     for (int i = 0; i < CARD_COUNT; i++) {
         if (i >= lo && i <= hi) {
-            if (!loaded[i]) {
-                textures[i] = LoadTexture(CardFilename(i));
-                if (textures[i].id == 0) textures[i] = placeholder; // file missing → placeholder
-                loaded[i] = true;
+            if (!g.textureLoaded[i]) {
+                g.textures[i] = LoadTexture(CardFilename(i));
+                if (g.textures[i].id == 0) g.textures[i] = g.placeholder;
+                g.textureLoaded[i] = true;
             }
         } else {
-            if (loaded[i]) {
-                if (textures[i].id != placeholder.id) UnloadTexture(textures[i]);
-                textures[i] = (Texture2D){0};
-                loaded[i] = false;
+            if (g.textureLoaded[i]) {
+                if (g.textures[i].id != g.placeholder.id) UnloadTexture(g.textures[i]);
+                g.textures[i] = (Texture2D){0};
+                g.textureLoaded[i] = false;
             }
         }
     }
 }
 
+static void GameLoop(void) {
+    float dt = GetFrameTime();
+
+    bool rightDown    = IsKeyDown(KEY_RIGHT)    || IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT);
+    bool leftDown     = IsKeyDown(KEY_LEFT)     || IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_FACE_LEFT);
+    bool rightPressed = IsKeyPressed(KEY_RIGHT) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT);
+    bool leftPressed  = IsKeyPressed(KEY_LEFT)  || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_LEFT);
+
+    if (rightDown) {
+        if (rightPressed) {
+            if (g.targetIndex < CARD_COUNT - 1) g.targetIndex++;
+            g.rightTimer = -REPEAT_DELAY;
+        } else {
+            g.rightTimer += dt;
+            if (g.rightTimer >= REPEAT_RATE) {
+                if (g.targetIndex < CARD_COUNT - 1) g.targetIndex++;
+                g.rightTimer -= REPEAT_RATE;
+            }
+        }
+    } else {
+        g.rightTimer = 0.0f;
+    }
+
+    if (leftDown) {
+        if (leftPressed) {
+            if (g.targetIndex > 0) g.targetIndex--;
+            g.leftTimer = -REPEAT_DELAY;
+        } else {
+            g.leftTimer += dt;
+            if (g.leftTimer >= REPEAT_RATE) {
+                if (g.targetIndex > 0) g.targetIndex--;
+                g.leftTimer -= REPEAT_RATE;
+            }
+        }
+    } else {
+        g.leftTimer = 0.0f;
+    }
+
+    if (g.targetIndex != g.loadedCenter) {
+        UpdateWindow(g.targetIndex);
+        g.loadedCenter = g.targetIndex;
+    }
+
+    g.smoothIndex = Lerp(g.smoothIndex, (float)g.targetIndex, 0.1f);
+
+    BeginDrawing();
+        ClearBackground(BLACK);
+
+        BeginMode3D(g.camera);
+            for (int i = 0; i < CARD_COUNT; i++) {
+                float offset    = (float)i - g.smoothIndex;
+                float absOffset = fabsf(offset);
+
+                float scale = 1.2f - (absOffset * 0.15f);
+                if (scale < 0.8f) scale = 0.8f;
+
+                float zPop = (1.0f - absOffset) * 1.5f;
+                if (zPop < 0) zPop = 0;
+
+                Vector3 pos = { offset * 3.2f, 0.0f, (-absOffset * 1.5f) + zPop };
+
+                g.cardModel.materials[0].maps[MATERIAL_MAP_ALBEDO].texture =
+                    g.textureLoaded[i] ? g.textures[i] : g.placeholder;
+
+                float  sideTilt = offset * -20.0f;
+                Matrix transform = MatrixIdentity();
+                transform = MatrixMultiply(transform, MatrixScale(scale, 1.0f, scale));
+                transform = MatrixMultiply(transform, MatrixRotateX(DEG2RAD * 90));
+                transform = MatrixMultiply(transform, MatrixRotateY(DEG2RAD * sideTilt));
+                transform = MatrixMultiply(transform, MatrixTranslate(pos.x, pos.y, pos.z));
+
+                g.cardModel.transform = transform;
+
+                Color tint = (i == g.targetIndex) ? WHITE : GRAY;
+                DrawModel(g.cardModel, (Vector3){0,0,0}, 1.0f, tint);
+            }
+        EndMode3D();
+
+        DrawText("Navigate with D-Pad / Arrows", 10, 10, 20, LIGHTGRAY);
+    EndDrawing();
+}
+
 int main(void) {
     InitWindow(1280, 720, "CardRetro");
 
-    Camera3D camera = { 0 };
-    camera.position = (Vector3){ 0.0f, 0.0f, 10.0f };
-    camera.target   = (Vector3){ 0.0f, 0.0f, 0.0f };
-    camera.up       = (Vector3){ 0.0f, 1.0f, 0.0f };
-    camera.fovy     = 45.0f;
-    camera.projection = CAMERA_PERSPECTIVE;
+    g.camera.position   = (Vector3){ 0.0f, 0.0f, 10.0f };
+    g.camera.target     = (Vector3){ 0.0f, 0.0f, 0.0f };
+    g.camera.up         = (Vector3){ 0.0f, 1.0f, 0.0f };
+    g.camera.fovy       = 45.0f;
+    g.camera.projection = CAMERA_PERSPECTIVE;
 
-    // 1x1 dark-grey placeholder shown while a real texture is outside the window
-    Image placeholderImg = GenImageColor(1, 1, DARKGRAY);
-    Texture2D placeholder = LoadTextureFromImage(placeholderImg);
+    Image placeholderImg    = GenImageColor(1, 1, DARKGRAY);
+    g.placeholder           = LoadTextureFromImage(placeholderImg);
     UnloadImage(placeholderImg);
 
-    Texture2D textures[CARD_COUNT] = {0};
-    bool      textureLoaded[CARD_COUNT] = {0};
-
-    Mesh  mesh      = GenMeshPlane(2.5f, 3.5f, 1, 1);
-    Model cardModel = LoadModelFromMesh(mesh);
-
-    int   targetIndex  = 0;
-    int   loadedCenter = -1;   // force UpdateWindow on the first frame
-    float smoothIndex  = 0.0f;
-    float rightTimer   = 0.0f;
-    float leftTimer    = 0.0f;
+    Mesh mesh       = GenMeshPlane(2.5f, 3.5f, 1, 1);
+    g.cardModel     = LoadModelFromMesh(mesh);
+    g.loadedCenter  = -1;  // force UpdateWindow on the first frame
 
     SetTargetFPS(60);
 
-    while (!WindowShouldClose()) {
-        float dt = GetFrameTime();
-
-        bool rightDown    = IsKeyDown(KEY_RIGHT)    || IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT);
-        bool leftDown     = IsKeyDown(KEY_LEFT)     || IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_FACE_LEFT);
-        bool rightPressed = IsKeyPressed(KEY_RIGHT) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT);
-        bool leftPressed  = IsKeyPressed(KEY_LEFT)  || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_LEFT_FACE_LEFT);
-
-        if (rightDown) {
-            if (rightPressed) {
-                if (targetIndex < CARD_COUNT - 1) targetIndex++;
-                rightTimer = -REPEAT_DELAY;
-            } else {
-                rightTimer += dt;
-                if (rightTimer >= REPEAT_RATE) {
-                    if (targetIndex < CARD_COUNT - 1) targetIndex++;
-                    rightTimer -= REPEAT_RATE;
-                }
-            }
-        } else {
-            rightTimer = 0.0f;
-        }
-
-        if (leftDown) {
-            if (leftPressed) {
-                if (targetIndex > 0) targetIndex--;
-                leftTimer = -REPEAT_DELAY;
-            } else {
-                leftTimer += dt;
-                if (leftTimer >= REPEAT_RATE) {
-                    if (targetIndex > 0) targetIndex--;
-                    leftTimer -= REPEAT_RATE;
-                }
-            }
-        } else {
-            leftTimer = 0.0f;
-        }
-
-        // shift the window only when the focused card actually changes
-        if (targetIndex != loadedCenter) {
-            UpdateWindow(textures, textureLoaded, targetIndex, placeholder);
-            loadedCenter = targetIndex;
-        }
-
-        smoothIndex = Lerp(smoothIndex, (float)targetIndex, 0.1f);
-
-        BeginDrawing();
-            ClearBackground(BLACK);
-
-            BeginMode3D(camera);
-                for (int i = 0; i < CARD_COUNT; i++) {
-                    float offset    = (float)i - smoothIndex;
-                    float absOffset = fabsf(offset);
-
-                    float scale = 1.2f - (absOffset * 0.15f);
-                    if (scale < 0.8f) scale = 0.8f;
-
-                    float zPop = (1.0f - absOffset) * 1.5f;
-                    if (zPop < 0) zPop = 0;
-
-                    Vector3 pos = { offset * 3.2f, 0.0f, (-absOffset * 1.5f) + zPop };
-
-                    // loaded texture or cheap placeholder — no branch in the hot path
-                    cardModel.materials[0].maps[MATERIAL_MAP_ALBEDO].texture =
-                        textureLoaded[i] ? textures[i] : placeholder;
-
-                    float  sideTilt = offset * -20.0f;
-                    Matrix transform = MatrixIdentity();
-                    transform = MatrixMultiply(transform, MatrixScale(scale, 1.0f, scale));
-                    transform = MatrixMultiply(transform, MatrixRotateX(DEG2RAD * 90));
-                    transform = MatrixMultiply(transform, MatrixRotateY(DEG2RAD * sideTilt));
-                    transform = MatrixMultiply(transform, MatrixTranslate(pos.x, pos.y, pos.z));
-
-                    cardModel.transform = transform;
-
-                    Color tint = (i == targetIndex) ? WHITE : GRAY;
-                    DrawModel(cardModel, (Vector3){0,0,0}, 1.0f, tint);
-                }
-            EndMode3D();
-
-            DrawText("Navigate with D-Pad / Arrows", 10, 10, 20, LIGHTGRAY);
-        EndDrawing();
-    }
+#ifdef PLATFORM_WEB
+    emscripten_set_main_loop(GameLoop, 0, 1);
+#else
+    while (!WindowShouldClose()) GameLoop();
 
     for (int i = 0; i < CARD_COUNT; i++) {
-        if (textureLoaded[i] && textures[i].id != placeholder.id) UnloadTexture(textures[i]);
+        if (g.textureLoaded[i] && g.textures[i].id != g.placeholder.id)
+            UnloadTexture(g.textures[i]);
     }
-    UnloadTexture(placeholder);
-    UnloadModel(cardModel);
+    UnloadTexture(g.placeholder);
+    UnloadModel(g.cardModel);
     CloseWindow();
+#endif
 
     return 0;
 }
