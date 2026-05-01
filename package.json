@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "start": "npx -y live-server --mount=/cardflow.mjs:./wbuild/cardflow.mjs --mount=/cardflow.data:./wbuild/cardflow.data web"
+    "start": "npx -y live-server --mount=/cardretro.mjs:./wbuild/cardretro.mjs --mount=/cardretro.data:./wbuild/cardretro.data web"
   },
   "type": "module"
 }

@@ -32,8 +32,8 @@ jobs:
 
       - name: Copy artifacts into web/
         run: |
-          cp wbuild/cardflow.mjs  web/
-          cp wbuild/cardflow.data web/
+          cp wbuild/cardretro.mjs  web/
+          cp wbuild/cardretro.data web/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

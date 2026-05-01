@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.18)
 # enable colors for ninja
 set(CMAKE_COLOR_DIAGNOSTICS ON)
 
-project(cardflow
+project(cardretro
   DESCRIPTION "Example of a cardflow in raylib"
   HOMEPAGE_URL "https://github.com/konsumer/raylib-cardflow"
   VERSION 0.0.1
