@@ -3,10 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "prestart": "npm run build:web",
-    "start": "npx -y live-server --mount=/cardretro.mjs:./wbuild/cardretro.mjs --mount=/cardretro.data:./wbuild/cardretro.data web",
-    "build:web": "emcmake cmake -B wbuild && cmake --build wbuild",
-    "build:native": "cmake -B build && cmake --build build"
+    "web:build": "emcmake cmake -B wbuild && cmake --build wbuild",
+    "start": "npx -y npm-run-all -p web:watch web:server",
+    "native": "npm run native:build && ./build/cardretro",
+    "web:server": "npx -y live-server --mount=/cardretro.mjs:./wbuild/cardretro.mjs --mount=/cardretro.data:./wbuild/cardretro.data web",
+    "web:watch": "npx -y nodemon -e cpp,c,h,hpp --exec 'npm run web:build' -w src",
+    "native:build": "cmake -B build && cmake --build build"
   },
   "type": "module"
 }

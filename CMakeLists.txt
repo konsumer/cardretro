@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.18)
 
-# enable colors for ninja
 set(CMAKE_COLOR_DIAGNOSTICS ON)
 
 project(cardretro
@@ -29,11 +28,8 @@ include(FetchContent)
 
 FetchContent_Declare(
     raylib
-    URL https://github.com/raysan5/raylib/archive/refs/tags/5.5.zip
+    URL https://github.com/raysan5/raylib/archive/refs/tags/6.0.zip
 )
-if(EMSCRIPTEN)
-  set(PLATFORM Web CACHE STRING "" FORCE)
-endif()
 
 FetchContent_MakeAvailable(raylib)
 
@@ -48,25 +44,12 @@ if(WIN32)
   target_compile_definitions(${PROJECT_NAME} PRIVATE NOMINMAX)
 endif()
 
-# ---------------------------------------------------------------------------
-# Emscripten / WebAssembly
-# ---------------------------------------------------------------------------
-# Build with:
-#   emcmake cmake -B build-web -DCMAKE_BUILD_TYPE=Release
-#   cmake --build build-web
-#
-# Output: wbuild/cardflow.mjs (wasm inlined) + wbuild/cardflow.data (preloaded assets)
-# ---------------------------------------------------------------------------
 if(EMSCRIPTEN)
-  # Emit a .mjs ES-module instead of .html
+  set(PLATFORM Web CACHE STRING "" FORCE)
   set(CMAKE_EXECUTABLE_SUFFIX ".mjs")
-
-  # Tell raylib we are targeting the web platform
   target_compile_definitions(${PROJECT_NAME} PRIVATE PLATFORM_WEB)
-
   target_link_options(${PROJECT_NAME} PRIVATE
-    # ES6 module output so you can: import cardflow from './cardflow.mjs'
-    -sSINGLE_FILE=1  # inlines .wasm into the .mjs; .data stays separate
+    -sSINGLE_FILE=1
     -sASYNCIFY
     -sUSE_GLFW=3
     -O3
