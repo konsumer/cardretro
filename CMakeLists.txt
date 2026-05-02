@@ -44,16 +44,3 @@ if(WIN32)
   target_compile_definitions(${PROJECT_NAME} PRIVATE NOMINMAX)
 endif()
 
-if(EMSCRIPTEN)
-  set(PLATFORM Web CACHE STRING "" FORCE)
-  set(CMAKE_EXECUTABLE_SUFFIX ".mjs")
-  target_compile_definitions(${PROJECT_NAME} PRIVATE PLATFORM_WEB)
-  target_link_options(${PROJECT_NAME} PRIVATE
-    -sSINGLE_FILE=1
-    -sUSE_GLFW=3
-    -O3
-    -sINITIAL_MEMORY=67108864
-    -sALLOW_MEMORY_GROWTH=1
-    --preload-file ${CMAKE_SOURCE_DIR}/poster.png@poster.png
-  )
-endif()

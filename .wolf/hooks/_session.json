@@ -1,0 +1,75 @@
+{
+  "session_id": "session-2026-05-02-2353",
+  "started": "2026-05-02T06:53:59.147Z",
+  "files_read": {
+    "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py": {
+      "count": 1,
+      "tokens": 7196,
+      "first_read": "2026-05-02T07:42:17.380Z"
+    },
+    "/Users/konsumer/Desktop/raylib-cardflow/src/main.c": {
+      "count": 6,
+      "tokens": 3056,
+      "first_read": "2026-05-02T08:30:18.726Z"
+    },
+    "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt": {
+      "count": 1,
+      "tokens": 341,
+      "first_read": "2026-05-02T08:31:35.110Z"
+    }
+  },
+  "files_written": [
+    {
+      "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+      "action": "create",
+      "tokens": 5664,
+      "at": "2026-05-02T07:57:13.514Z"
+    },
+    {
+      "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+      "action": "create",
+      "tokens": 3280,
+      "at": "2026-05-02T08:51:43.726Z"
+    },
+    {
+      "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+      "action": "edit",
+      "tokens": 0,
+      "at": "2026-05-02T08:51:54.788Z"
+    },
+    {
+      "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+      "action": "edit",
+      "tokens": 39,
+      "at": "2026-05-02T09:00:25.809Z"
+    },
+    {
+      "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+      "action": "edit",
+      "tokens": 24,
+      "at": "2026-05-02T09:00:30.530Z"
+    },
+    {
+      "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+      "action": "edit",
+      "tokens": 96,
+      "at": "2026-05-02T09:04:49.293Z"
+    },
+    {
+      "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+      "action": "edit",
+      "tokens": 21,
+      "at": "2026-05-02T09:04:54.348Z"
+    }
+  ],
+  "edit_counts": {
+    "fetch_posters.py": 1,
+    "src/main.c": 5,
+    "CMakeLists.txt": 1
+  },
+  "anatomy_hits": 3,
+  "anatomy_misses": 0,
+  "repeated_reads_warned": 5,
+  "cerebrum_warnings": 0,
+  "stop_count": 4
+}

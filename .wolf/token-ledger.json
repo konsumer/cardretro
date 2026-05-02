@@ -1,0 +1,817 @@
+{
+  "version": 1,
+  "created_at": "2026-05-01T15:41:02.905Z",
+  "lifetime": {
+    "total_tokens_estimated": 212632,
+    "total_reads": 38,
+    "total_writes": 66,
+    "total_sessions": 5,
+    "anatomy_hits": 38,
+    "anatomy_misses": 0,
+    "repeated_reads_blocked": 31,
+    "estimated_savings_vs_bare_cli": 165292
+  },
+  "sessions": [
+    {
+      "id": "session-2026-05-01-0844",
+      "started": "2026-05-01T15:44:13.857Z",
+      "ended": "2026-05-01T15:44:47.608Z",
+      "reads": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 1728,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 341,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/package.json",
+          "tokens_estimated": 186,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [],
+      "totals": {
+        "input_tokens_estimated": 2255,
+        "output_tokens_estimated": 0,
+        "reads_count": 3,
+        "writes_count": 0,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 3
+      }
+    },
+    {
+      "id": "session-2026-05-01-0844",
+      "started": "2026-05-01T15:44:13.857Z",
+      "ended": "2026-05-01T15:54:38.408Z",
+      "reads": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 1728,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 341,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/package.json",
+          "tokens_estimated": 186,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 2179,
+          "action": "create"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 2255,
+        "output_tokens_estimated": 2179,
+        "reads_count": 3,
+        "writes_count": 1,
+        "repeated_reads_blocked": 1,
+        "anatomy_lookups": 3
+      }
+    },
+    {
+      "id": "session-2026-05-01-0844",
+      "started": "2026-05-01T15:44:13.857Z",
+      "ended": "2026-05-01T16:20:47.003Z",
+      "reads": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 1728,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 341,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/package.json",
+          "tokens_estimated": 186,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 2179,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 4346,
+          "action": "create"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 2255,
+        "output_tokens_estimated": 6525,
+        "reads_count": 3,
+        "writes_count": 2,
+        "repeated_reads_blocked": 1,
+        "anatomy_lookups": 3
+      }
+    },
+    {
+      "id": "session-2026-05-01-0844",
+      "started": "2026-05-01T15:44:13.857Z",
+      "ended": "2026-05-01T16:32:09.233Z",
+      "reads": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 1728,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 341,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/package.json",
+          "tokens_estimated": 186,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 5425,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 2179,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 4346,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 5424,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 29,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 276,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 7680,
+        "output_tokens_estimated": 12254,
+        "reads_count": 4,
+        "writes_count": 5,
+        "repeated_reads_blocked": 3,
+        "anatomy_lookups": 4
+      }
+    },
+    {
+      "id": "session-2026-05-01-0844",
+      "started": "2026-05-01T15:44:13.857Z",
+      "ended": "2026-05-01T23:20:01.202Z",
+      "reads": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 1728,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 341,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/package.json",
+          "tokens_estimated": 186,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 6733,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 2179,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 4346,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 5424,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 29,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 276,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 6662,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 15,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 130,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 156,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 8988,
+        "output_tokens_estimated": 19217,
+        "reads_count": 4,
+        "writes_count": 9,
+        "repeated_reads_blocked": 7,
+        "anatomy_lookups": 4
+      }
+    },
+    {
+      "id": "session-2026-05-01-0844",
+      "started": "2026-05-01T15:44:13.857Z",
+      "ended": "2026-05-01T23:36:42.404Z",
+      "reads": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 1728,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 341,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/package.json",
+          "tokens_estimated": 186,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 6733,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 2179,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 4346,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 5424,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 29,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 276,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 6662,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 15,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 130,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 156,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 8988,
+        "output_tokens_estimated": 19217,
+        "reads_count": 4,
+        "writes_count": 9,
+        "repeated_reads_blocked": 7,
+        "anatomy_lookups": 4
+      }
+    },
+    {
+      "id": "session-2026-05-01-0844",
+      "started": "2026-05-01T15:44:13.857Z",
+      "ended": "2026-05-01T23:43:57.441Z",
+      "reads": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 1728,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 341,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/package.json",
+          "tokens_estimated": 186,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 6733,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 2179,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 4346,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 5424,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 29,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 276,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 6662,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 15,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 130,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 156,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 8988,
+        "output_tokens_estimated": 19217,
+        "reads_count": 4,
+        "writes_count": 9,
+        "repeated_reads_blocked": 7,
+        "anatomy_lookups": 4
+      }
+    },
+    {
+      "id": "session-2026-05-01-1657",
+      "started": "2026-05-01T23:57:00.242Z",
+      "ended": "2026-05-02T02:08:01.094Z",
+      "reads": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 6842,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 466,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 143,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 88,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 62,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 251,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 6842,
+        "output_tokens_estimated": 1010,
+        "reads_count": 1,
+        "writes_count": 5,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-05-01-1657",
+      "started": "2026-05-01T23:57:00.242Z",
+      "ended": "2026-05-02T02:14:44.919Z",
+      "reads": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 6842,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 466,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 143,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 88,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 62,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 251,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 6842,
+        "output_tokens_estimated": 1010,
+        "reads_count": 1,
+        "writes_count": 5,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-05-01-1657",
+      "started": "2026-05-01T23:57:00.242Z",
+      "ended": "2026-05-02T02:15:40.579Z",
+      "reads": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 6842,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 466,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 143,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 88,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 62,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 251,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 6842,
+        "output_tokens_estimated": 1010,
+        "reads_count": 1,
+        "writes_count": 5,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-05-02-2353",
+      "started": "2026-05-02T06:53:59.147Z",
+      "ended": "2026-05-02T07:58:20.191Z",
+      "reads": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 7196,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 5664,
+          "action": "create"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 7196,
+        "output_tokens_estimated": 5664,
+        "reads_count": 1,
+        "writes_count": 1,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 1
+      }
+    },
+    {
+      "id": "session-2026-05-02-2353",
+      "started": "2026-05-02T06:53:59.147Z",
+      "ended": "2026-05-02T08:59:03.622Z",
+      "reads": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 7196,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 1728,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 341,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 5664,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 3280,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 0,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 9265,
+        "output_tokens_estimated": 8944,
+        "reads_count": 3,
+        "writes_count": 3,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 3
+      }
+    },
+    {
+      "id": "session-2026-05-02-2353",
+      "started": "2026-05-02T06:53:59.147Z",
+      "ended": "2026-05-02T09:00:38.240Z",
+      "reads": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 7196,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 1728,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 341,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 5664,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 3280,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 0,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 39,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 24,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 9265,
+        "output_tokens_estimated": 9007,
+        "reads_count": 3,
+        "writes_count": 5,
+        "repeated_reads_blocked": 0,
+        "anatomy_lookups": 3
+      }
+    },
+    {
+      "id": "session-2026-05-02-2353",
+      "started": "2026-05-02T06:53:59.147Z",
+      "ended": "2026-05-02T09:05:06.871Z",
+      "reads": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 7196,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 3056,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 341,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 5664,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 3280,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 0,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 39,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 24,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 96,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 21,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 10593,
+        "output_tokens_estimated": 9124,
+        "reads_count": 3,
+        "writes_count": 7,
+        "repeated_reads_blocked": 5,
+        "anatomy_lookups": 3
+      }
+    }
+  ],
+  "daemon_usage": [],
+  "waste_flags": [],
+  "optimization_report": {
+    "last_generated": null,
+    "patterns": []
+  }
+}

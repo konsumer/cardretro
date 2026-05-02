@@ -1,0 +1,34 @@
+{
+  "generated_at": "2026-05-01T15:44:47.814Z",
+  "achievements": [
+    "Removed ASYNCIFY dependency — switched to global GameState struct pattern, enabling emscripten_set_main_loop without blocking/coroutine overhead",
+    "Increased card capacity to CARD_COUNT=2000 with a sliding texture window (WINDOW_HALF=8) for memory-efficient streaming",
+    "Added gamepad support (D-pad) alongside keyboard arrow navigation",
+    "Implemented key-repeat with configurable REPEAT_DELAY/REPEAT_RATE for held-key scrolling",
+    "Improved CI build pipeline for GitHub Pages deployment",
+    "Reduced demo poster.png size to improve initial load time on web"
+  ],
+  "improvements": [
+    "CardFilename() is a stub — it always returns 'poster.png'. The per-card filename logic is commented out with a TODO, meaning the carousel is non-functional for real data",
+    "WINDOW_HALF=8 loads 17 textures at a time — fine for desktop, but on web with potentially large card images this could spike memory; consider making it configurable or smaller for web builds",
+    "No touch/swipe input — only keyboard and gamepad are supported, limiting mobile web usability",
+    "The help text ('Navigate with D-Pad / Arrows') only shows at card 0 and disappears permanently — consider a fade-out timer instead",
+    "Matrix transform chain rebuilds MatrixIdentity() every frame for all CARD_COUNT cards — pre-computing visible range only would reduce CPU work",
+    "The EMSCRIPTEN preload embeds only poster.png; a real deployment would need a different asset strategy for 2000 unique cards"
+  ],
+  "next_tasks": [
+    "Implement real CardFilename() logic — accept a data source (file list, JSON manifest, or directory scan) and wire up per-card images",
+    "Add touch/swipe gesture support via raylib's gesture API (GetGestureDetected, GESTURE_SWIPE_LEFT/RIGHT) for mobile web",
+    "Add a card index/counter HUD (e.g. '42 / 2000') so users know their position in a large collection",
+    "Support loading a card list from a JSON or CSV file embedded in the web build, so the demo is self-contained and useful",
+    "Add mouse wheel/trackpad scroll navigation as a third input method",
+    "Consider adding a search/jump-to feature for large collections (keyboard shortcut to enter a number)"
+  ],
+  "risks": [
+    "Web memory ceiling: 2000 cards × any real texture size can exhaust the 64MB INITIAL_MEMORY even with the window strategy — ALLOW_MEMORY_GROWTH is set but wasm heap growth is slow and can fail on iOS Safari",
+    "Single-file emscripten build (-sSINGLE_FILE=1) will be very large once real card images are preloaded; the current demo only embeds one poster.png, but a real dataset would require a streaming/fetch strategy instead of --preload-file",
+    "No error handling when LoadTexture fails — the code falls back to placeholder silently, but errors won't surface to the user or a log",
+    "CMakeLists.txt references 'vmlib' in the WIN32 block (line 41) which doesn't exist in this project — this is a latent bug that will break Windows native builds",
+    "raylib is pinned to 6.0 via zip URL — no version lock file, so a re-download could break if the upstream tag moves or is deleted"
+  ]
+}

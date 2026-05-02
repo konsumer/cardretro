@@ -8,7 +8,8 @@
     "native": "npm run native:build && ./build/cardretro",
     "web:server": "npx -y live-server --mount=/cardretro.mjs:./wbuild/cardretro.mjs --mount=/cardretro.data:./wbuild/cardretro.data web",
     "web:watch": "npx -y nodemon -e cpp,c,h,hpp --exec 'npm run web:build' -w src",
-    "native:build": "cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build --parallel"
+    "native:build": "cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build --parallel",
+    "build": "npm run native:build"
   },
   "type": "module"
 }
