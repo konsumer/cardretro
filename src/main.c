@@ -1,6 +1,9 @@
 #include "raylib.h"
 #include "raymath.h"
+#define RAYLIB_LIBRETRO_IMPLEMENTATION
+#include "raylib-libretro.h"
 #include <string.h>
+#include <stdio.h>
 
 #define MAX_SYSTEMS     16
 #define MAX_ROMS        512
@@ -9,10 +12,19 @@
 #define REPEAT_DELAY    0.4f
 #define REPEAT_RATE     0.08f
 
-typedef enum { LEVEL_SYSTEM, LEVEL_ROM } AppLevel;
+#if defined(_WIN32)
+#define CORE_EXT ".dll"
+#elif defined(__APPLE__)
+#define CORE_EXT ".dylib"
+#else
+#define CORE_EXT ".so"
+#endif
+
+typedef enum { LEVEL_SYSTEM, LEVEL_ROM, LEVEL_PLAYING } AppLevel;
 
 typedef struct {
     char label[128];
+    char romPath[256];
     char posterPath[256];
 } RomEntry;
 
@@ -42,6 +54,9 @@ typedef struct {
     Texture2D textures[MAX_ROMS];
     bool      textureLoaded[MAX_ROMS];
     int       loadedCenter;
+
+    int       playingSysIdx;
+    int       playingRomIdx;
 } GameState;
 
 static GameState g;
@@ -98,6 +113,81 @@ static const char *SystemDisplayName(const char *dir) {
     return dir;
 }
 
+static const char *CoreForSystem(const char *dir) {
+    static const struct { const char *key, *val; } map[] = {
+        {"gb",          "gambatte_libretro"},
+        {"gbc",         "gambatte_libretro"},
+        {"gba",         "mgba_libretro"},
+        {"nes",         "fceumm_libretro"},
+        {"famicom",     "fceumm_libretro"},
+        {"fds",         "fceumm_libretro"},
+        {"snes",        "snes9x_libretro"},
+        {"superfamicom","snes9x_libretro"},
+        {"n64",         "mupen64plus_next_libretro"},
+        {"nds",         "desmume_libretro"},
+        {"genesis",     "genesis_plus_gx_libretro"},
+        {"megadrive",   "genesis_plus_gx_libretro"},
+        {"md",          "genesis_plus_gx_libretro"},
+        {"sms",         "genesis_plus_gx_libretro"},
+        {"mastersystem","genesis_plus_gx_libretro"},
+        {"gg",          "genesis_plus_gx_libretro"},
+        {"gamegear",    "genesis_plus_gx_libretro"},
+        {"saturn",      "yabasanshiro_libretro"},
+        {"32x",         "picodrive_libretro"},
+        {"segacd",      "genesis_plus_gx_libretro"},
+        {"scd",         "genesis_plus_gx_libretro"},
+        {"dreamcast",   "flycast_libretro"},
+        {"dc",          "flycast_libretro"},
+        {"psx",         "pcsx_rearmed_libretro"},
+        {"ps1",         "pcsx_rearmed_libretro"},
+        {"psp",         "ppsspp_libretro"},
+        {"atari2600",   "stella_libretro"},
+        {"2600",        "stella_libretro"},
+        {"atari7800",   "prosystem_libretro"},
+        {"7800",        "prosystem_libretro"},
+        {"lynx",        "handy_libretro"},
+        {"jaguar",      "virtualjaguar_libretro"},
+        {"pce",         "mednafen_pce_libretro"},
+        {"tg16",        "mednafen_pce_libretro"},
+        {"ngp",         "mednafen_ngp_libretro"},
+        {"ngpc",        "mednafen_ngp_libretro"},
+        {"wonderswan",  "mednafen_wswan_libretro"},
+        {"wsc",         "mednafen_wswan_libretro"},
+        {"c64",         "vice_x64_libretro"},
+        {NULL, NULL}
+    };
+    for (int i = 0; map[i].key; i++)
+        if (strcmp(dir, map[i].key) == 0) return map[i].val;
+    return NULL;
+}
+
+// ROM file extensions — anything that's not one of these (or .png) is skipped
+static bool IsRomExtension(const char *path) {
+    static const char *exts[] = {
+        ".nes",".fds",".unf",".unif",
+        ".smc",".sfc",".fig",".swc",
+        ".gb",".gbc",".gba",
+        ".z64",".n64",".v64",
+        ".nds",".3ds",
+        ".iso",".bin",".cue",".chd",".pbp",
+        ".md",".gen",".smd",
+        ".sms",".gg",
+        ".pce",
+        ".a26",".a52",".a78",
+        ".lnx",
+        ".ngp",".ngc",
+        ".ws",".wsc",
+        ".col",".int",".vec",
+        ".d64",".t64",".prg",
+        ".adf",
+        ".zip",".7z",
+        NULL
+    };
+    for (int i = 0; exts[i]; i++)
+        if (IsFileExtension(path, exts[i])) return true;
+    return false;
+}
+
 static void ScanSystems(const char *romsDir) {
     FilePathList dirs = LoadDirectoryFiles(romsDir);
     for (int i = 0; i < (int)dirs.count && g.systemCount < MAX_SYSTEMS; i++) {
@@ -109,11 +199,17 @@ static void ScanSystems(const char *romsDir) {
         strncpy(sys->dirName, dirName, sizeof(sys->dirName) - 1);
         strncpy(sys->displayName, SystemDisplayName(dirName), sizeof(sys->displayName) - 1);
 
-        FilePathList files = LoadDirectoryFilesEx(dirs.paths[i], ".png", false);
+        FilePathList files = LoadDirectoryFiles(dirs.paths[i]);
         for (int j = 0; j < (int)files.count && sys->count < MAX_ROMS; j++) {
-            RomEntry *rom = &sys->roms[sys->count];
-            strncpy(rom->posterPath, files.paths[j], sizeof(rom->posterPath) - 1);
-            strncpy(rom->label, GetFileNameWithoutExt(files.paths[j]), sizeof(rom->label) - 1);
+            if (!IsRomExtension(files.paths[j])) continue;
+
+            RomEntry *rom  = &sys->roms[sys->count];
+            const char *stem = GetFileNameWithoutExt(files.paths[j]);
+
+            strncpy(rom->romPath, files.paths[j], sizeof(rom->romPath) - 1);
+            strncpy(rom->label,   stem,            sizeof(rom->label)   - 1);
+            snprintf(rom->posterPath, sizeof(rom->posterPath),
+                "%s/%s.png", dirs.paths[i], stem);
             sys->count++;
         }
         UnloadDirectoryFiles(files);
@@ -171,10 +267,10 @@ static void UpdateWindow(int center) {
 
 static void EnterSystemLevel(void) {
     UnloadAllTextures();
-    g.level       = LEVEL_SYSTEM;
-    g.cardCount   = g.systemCount;
-    g.targetIndex = 0;
-    g.smoothIndex = 0.0f;
+    g.level        = LEVEL_SYSTEM;
+    g.cardCount    = g.systemCount;
+    g.targetIndex  = 0;
+    g.smoothIndex  = 0.0f;
     g.loadedCenter = -1;
     g.rightTimer = g.leftTimer = 0.0f;
 }
@@ -190,9 +286,69 @@ static void EnterRomLevel(int sysIdx) {
     g.rightTimer = g.leftTimer = 0.0f;
 }
 
+static void LaunchRom(int sysIdx, int romIdx) {
+    System   *sys = &g.systems[sysIdx];
+    RomEntry *rom = &sys->roms[romIdx];
+
+    const char *coreName = CoreForSystem(sys->dirName);
+    if (!coreName) {
+        TraceLog(LOG_WARNING, "No core mapped for system: %s", sys->dirName);
+        return;
+    }
+
+    char corePath[512];
+    snprintf(corePath, sizeof(corePath), "cores/%s" CORE_EXT, coreName);
+
+    TraceLog(LOG_INFO, "Core: %s", corePath);
+    TraceLog(LOG_INFO, "ROM:  %s", rom->romPath);
+
+    if (!InitLibretro(corePath)) {
+        TraceLog(LOG_ERROR, "Failed to load core: %s", corePath);
+        return;
+    }
+    if (!LoadLibretroGame(rom->romPath)) {
+        TraceLog(LOG_ERROR, "Failed to load game: %s", rom->romPath);
+        CloseLibretro();
+        return;
+    }
+
+    g.playingSysIdx = sysIdx;
+    g.playingRomIdx = romIdx;
+    g.level         = LEVEL_PLAYING;
+}
+
 // ---------------------------------------------------------------------------
 
 static void GameLoop(void) {
+    // ---- PLAYING state ----
+    if (g.level == LEVEL_PLAYING) {
+        if (IsKeyPressed(KEY_F1)
+         || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_MIDDLE_LEFT)) {
+            UnloadLibretroGame();
+            CloseLibretro();
+            EnterRomLevel(g.playingSysIdx);
+            g.targetIndex  = g.playingRomIdx;
+            g.smoothIndex  = (float)g.playingRomIdx;
+            UpdateWindow(g.playingRomIdx);
+            g.loadedCenter = g.playingRomIdx;
+            return;
+        }
+        if (LibretroShouldClose()) {
+            UnloadLibretroGame();
+            CloseLibretro();
+            EnterRomLevel(g.playingSysIdx);
+            return;
+        }
+        UpdateLibretro();
+        BeginDrawing();
+            ClearBackground(BLACK);
+            DrawLibretroPro((Rectangle){0, 0, GetScreenWidth(), GetScreenHeight()}, WHITE);
+            DrawLibretroMessage();
+        EndDrawing();
+        return;
+    }
+
+    // ---- CARDFLOW state ----
     float dt = GetFrameTime();
 
     bool rightDown    = IsKeyDown(KEY_RIGHT)    || IsGamepadButtonDown(0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT);
@@ -240,16 +396,15 @@ static void GameLoop(void) {
         if (g.level == LEVEL_SYSTEM) {
             EnterRomLevel(g.targetIndex);
         } else {
-            TraceLog(LOG_INFO, "Launch: %s",
-                g.systems[g.selectedSystem].roms[g.targetIndex].posterPath);
+            LaunchRom(g.selectedSystem, g.targetIndex);
         }
     }
 
     if (back && g.level == LEVEL_ROM) {
         int prev = g.selectedSystem;
         EnterSystemLevel();
-        g.targetIndex = prev;
-        g.smoothIndex = (float)prev;
+        g.targetIndex  = prev;
+        g.smoothIndex  = (float)prev;
         UpdateWindow(prev);
         g.loadedCenter = prev;
     }
@@ -261,7 +416,6 @@ static void GameLoop(void) {
 
     g.smoothIndex = Lerp(g.smoothIndex, (float)g.targetIndex, 0.1f);
 
-    // ---- draw ----
     BeginDrawing();
         ClearBackground(BLACK);
 
@@ -294,13 +448,11 @@ static void GameLoop(void) {
             }
         EndMode3D();
 
-        // Label at bottom
         const char *label = ActiveCardLabel(g.targetIndex);
         int fontSize  = 24;
         int textWidth = MeasureText(label, fontSize);
         DrawText(label, (GetScreenWidth() - textWidth) / 2, GetScreenHeight() - 40, fontSize, WHITE);
 
-        // Breadcrumb at top
         if (g.level == LEVEL_ROM) {
             const char *sysName = g.systems[g.selectedSystem].displayName;
             DrawText(sysName, 10, 10, 20, LIGHTGRAY);
@@ -316,6 +468,7 @@ static void GameLoop(void) {
 
 int main(void) {
     InitWindow(1280, 720, "CardRetro");
+    InitAudioDevice();
     SetTargetFPS(60);
 
     g.camera.position   = (Vector3){ 0.0f, 0.0f, 10.0f };
@@ -328,12 +481,13 @@ int main(void) {
     g.placeholder        = LoadTextureFromImage(placeholderImg);
     UnloadImage(placeholderImg);
 
-    Mesh mesh    = GenMeshPlane(2.5f, 3.5f, 1, 1);
-    g.cardModel  = LoadModelFromMesh(mesh);
+    Mesh mesh   = GenMeshPlane(2.5f, 3.5f, 1, 1);
+    g.cardModel = LoadModelFromMesh(mesh);
 
     ScanSystems("roms");
     if (g.systemCount == 0) {
         TraceLog(LOG_ERROR, "No systems found in roms/");
+        CloseAudioDevice();
         CloseWindow();
         return 1;
     }
@@ -342,9 +496,14 @@ int main(void) {
 
     while (!WindowShouldClose()) GameLoop();
 
+    if (g.level == LEVEL_PLAYING) {
+        UnloadLibretroGame();
+        CloseLibretro();
+    }
     UnloadAllTextures();
     UnloadTexture(g.placeholder);
     UnloadModel(g.cardModel);
+    CloseAudioDevice();
     CloseWindow();
     return 0;
 }

@@ -4,3 +4,4 @@ wbuild/
 roms/
 __pycache__
 .posters_cache
+cores/

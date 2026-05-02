@@ -64,6 +64,22 @@
       "related_bugs": [],
       "occurrences": 2,
       "last_seen": "2026-05-02T09:04:54.349Z"
+    },
+    {
+      "id": "bug-005",
+      "timestamp": "2026-05-02T09:53:19.698Z",
+      "error_message": "Incorrect value in code",
+      "file": "src/main.c",
+      "root_cause": "Had \"%scores/%s\"",
+      "fix": "Changed to \"cores/%s\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "c"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-02T09:53:19.698Z"
     }
   ]
 }

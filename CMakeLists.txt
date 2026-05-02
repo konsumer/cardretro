@@ -29,12 +29,24 @@ include(FetchContent)
 FetchContent_Declare(
     raylib
     URL https://github.com/raysan5/raylib/archive/refs/tags/6.0.zip
+    OVERRIDE_FIND_PACKAGE
 )
 
-FetchContent_MakeAvailable(raylib)
+set(BUILD_RAYLIB_LIBRETRO_EXAMPLE OFF CACHE BOOL "" FORCE)
+set(BUILD_RAYLIB_LIBRETRO         OFF CACHE BOOL "" FORCE)
+
+FetchContent_Declare(
+    raylib_libretro
+    GIT_REPOSITORY https://github.com/RobLoach/raylib-libretro.git
+    GIT_TAG        master
+    GIT_SUBMODULES "vendor/libretro-common"
+    GIT_SHALLOW    TRUE
+)
+
+FetchContent_MakeAvailable(raylib raylib_libretro)
 
 add_executable(${PROJECT_NAME} src/main.c)
-target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
+target_link_libraries(${PROJECT_NAME} PRIVATE raylib raylib-libretro-static)
 
 if(WIN32)
   target_compile_definitions(vmlib PRIVATE
@@ -43,4 +55,3 @@ if(WIN32)
   )
   target_compile_definitions(${PROJECT_NAME} PRIVATE NOMINMAX)
 endif()
-

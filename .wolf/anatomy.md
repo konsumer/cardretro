@@ -1,6 +1,6 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-05-02T09:04:54.341Z
+> Auto-maintained by OpenWolf. Last scanned: 2026-05-02T09:53:19.690Z
 > Files: 550 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ./
@@ -8,7 +8,7 @@
 - `.DS_Store` (~1640 tok)
 - `.gitignore` — Git ignore rules (~12 tok)
 - `CLAUDE.md` — OpenWolf (~57 tok)
-- `CMakeLists.txt` (~245 tok)
+- `CMakeLists.txt` (~342 tok)
 - `fetch_posters.py` — Bulk CRC→retroapi lookup + libretro thumbnail download (~3800 tok)
 - `package.json` — Node.js package manifest (~186 tok)
 - `README.md` — Project documentation (~40 tok)
@@ -226,7 +226,7 @@
 ## src/
 
 - `.DS_Store` (~1640 tok)
-- `main.c` — include "raylib.h" (~3064 tok)
+- `main.c` — include "raylib.h" (~4475 tok)
 
 ## wbuild/
 

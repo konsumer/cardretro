@@ -2,14 +2,14 @@
   "version": 1,
   "created_at": "2026-05-01T15:41:02.905Z",
   "lifetime": {
-    "total_tokens_estimated": 212632,
-    "total_reads": 38,
-    "total_writes": 66,
+    "total_tokens_estimated": 309978,
+    "total_reads": 50,
+    "total_writes": 114,
     "total_sessions": 5,
-    "anatomy_hits": 38,
+    "anatomy_hits": 50,
     "anatomy_misses": 0,
-    "repeated_reads_blocked": 31,
-    "estimated_savings_vs_bare_cli": 165292
+    "repeated_reads_blocked": 59,
+    "estimated_savings_vs_bare_cli": 233812
   },
   "sessions": [
     {
@@ -804,6 +804,386 @@
         "reads_count": 3,
         "writes_count": 7,
         "repeated_reads_blocked": 5,
+        "anatomy_lookups": 3
+      }
+    },
+    {
+      "id": "session-2026-05-02-2353",
+      "started": "2026-05-02T06:53:59.147Z",
+      "ended": "2026-05-02T09:44:08.256Z",
+      "reads": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 7196,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 3056,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 625,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 5664,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 3280,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 0,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 39,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 24,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 96,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 21,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 472,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 37,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 157,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 59,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 10877,
+        "output_tokens_estimated": 9849,
+        "reads_count": 3,
+        "writes_count": 11,
+        "repeated_reads_blocked": 7,
+        "anatomy_lookups": 3
+      }
+    },
+    {
+      "id": "session-2026-05-02-2353",
+      "started": "2026-05-02T06:53:59.147Z",
+      "ended": "2026-05-02T09:48:40.143Z",
+      "reads": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 7196,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 3056,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 625,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 5664,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 3280,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 0,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 39,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 24,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 96,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 21,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 472,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 37,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 157,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 59,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 4807,
+          "action": "create"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 10877,
+        "output_tokens_estimated": 14656,
+        "reads_count": 3,
+        "writes_count": 12,
+        "repeated_reads_blocked": 7,
+        "anatomy_lookups": 3
+      }
+    },
+    {
+      "id": "session-2026-05-02-2353",
+      "started": "2026-05-02T06:53:59.147Z",
+      "ended": "2026-05-02T09:50:31.259Z",
+      "reads": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 7196,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 3056,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 625,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 5664,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 3280,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 0,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 39,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 24,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 96,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 21,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 472,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 37,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 157,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 59,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 4807,
+          "action": "create"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 10877,
+        "output_tokens_estimated": 14656,
+        "reads_count": 3,
+        "writes_count": 12,
+        "repeated_reads_blocked": 7,
+        "anatomy_lookups": 3
+      }
+    },
+    {
+      "id": "session-2026-05-02-2353",
+      "started": "2026-05-02T06:53:59.147Z",
+      "ended": "2026-05-02T09:53:28.301Z",
+      "reads": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 7196,
+          "was_repeated": false,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 3056,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 625,
+          "was_repeated": true,
+          "anatomy_had_description": false
+        }
+      ],
+      "writes": [
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/fetch_posters.py",
+          "tokens_estimated": 5664,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 3280,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 0,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 39,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 24,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 96,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 21,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 472,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 37,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 157,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/CMakeLists.txt",
+          "tokens_estimated": 59,
+          "action": "edit"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 4807,
+          "action": "create"
+        },
+        {
+          "file": "/Users/konsumer/Desktop/raylib-cardflow/src/main.c",
+          "tokens_estimated": 21,
+          "action": "edit"
+        }
+      ],
+      "totals": {
+        "input_tokens_estimated": 10877,
+        "output_tokens_estimated": 14677,
+        "reads_count": 3,
+        "writes_count": 13,
+        "repeated_reads_blocked": 7,
         "anatomy_lookups": 3
       }
     }
